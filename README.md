@@ -115,6 +115,8 @@ def sync_files(source_file):
         print(f'Sincronizado: {source_file}')
     except subprocess.CalledProcessError as e:
         print(f'Error al sincronizar {source_file}: {e}')
+    except Exception as e:
+        print(f'Error inesperado al sincronizar {source_file}: {e}')
 
 def main():
     source_dir = '/home/student/data/prod'
@@ -128,6 +130,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
 
 
 Una vez que hayas terminado de escribir el script Python, **guarda el archivo** pulsando Ctrl-o, la tecla Enter y Ctrl-x.
