@@ -36,7 +36,7 @@ python3
 import psutil
 psutil.cpu_percent()
 ```
-La salida muestra:
+Una posible salida mostraría:
 
 ```1.2```
 
@@ -53,6 +53,50 @@ Para comprobar la E/S de disco, puedes usar el siguiente comando:
 ```
 psutil.disk_io_counters()
 ```
+Salida:
+
+```python
+sdiskio(read_count=56089, write_count=113305, read_bytes=5736552448, write_bytes=3971753984, read_time=287876, write_time=905894, 
+read_merged_count=19901, write_merged_count=546700, busy_time=193358)
+```
+
+Para comprobar el ancho de banda de E/S de red:
+```
+psutil.net_io_counters()
+```
+Salida:
+```
+snetio(bytes_sent=153564, bytes_recv=32133915, packets_sent=2182, 
+packets_recv=2738, errin=0, errout=0, dropin=0, dropout=0)
+```
+
+Salga del shell de Python usando exit().
+
+Después de comprobar la E/S de disco y el ancho de banda de red, has observado la cantidad de bytes leídos y escritos para la E/S de disco y bytes recibidos y enviados para el ancho de banda de E/S de red.
+
+El script dailysync.py original contenía el siguiente código:
+```python
+#! usr/bin/env python3 
+import subprocess
+src = "home/student/data/prod" # ruta de origen de los datos 
+dest = "home/student/data/prod_backup" # ruta de destino de los datos 
+subprocess.call(["rsync", "-arq", src, dest]) #Llamamos al método call del módulo subprocess para usar el comando rsync para sincronizar los datos.
+```
+
+Usando el script anterior, puedes sincronizar tus datos recursivamente desde la ruta de origen a la ruta de destino.
+
+Al ejecutar este script con grandes cantidades de datos tarda más de 20 minutos en realizar la sincronización.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
