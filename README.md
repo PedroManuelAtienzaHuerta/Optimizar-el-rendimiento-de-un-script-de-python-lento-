@@ -111,6 +111,7 @@ def sync_files(source_file):
     source_path = os.path.join('/home/student/data/prod', source_file)
     dest_path = os.path.join('/home/student/data/prod_backup', source_file)
     try:
+        # Comando rsync para sincronizar los archivos
         subprocess.run(['rsync', '-av', source_path, dest_path], check=True)
         print(f'Sincronizado: {source_file}')
     except subprocess.CalledProcessError as e:
@@ -121,9 +122,11 @@ def sync_files(source_file):
 def main():
     source_dir = '/home/student/data/prod'
     files_to_sync = []
+    # Recorre a través de los directorios y recoge todas las rutas relativas de archivos de source_dir
     for root, _, files in os.walk(source_dir):
         for file in files:
             files_to_sync.append(os.path.relpath(os.path.join(root, file), source_dir))
+    # Usa Pool para paralelizar el proceso de sincronización de archivos
     with Pool() as pool:
         pool.map(sync_files, files_to_sync)
 
