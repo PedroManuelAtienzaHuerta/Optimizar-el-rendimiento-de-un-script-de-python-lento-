@@ -113,7 +113,7 @@ def sync_files(source_file):
     try:
         subprocess.run(['rsync', '-av', source_path, dest_path], check=True)
         print(f'Sincronizado: {source_file}')
-    except Subprocess. CalledProcessError as e:
+    except Subprocess.CalledProcessError as e:
         print(f'Error al sincronizar {source_file}: {e}')
 
 def main():
@@ -125,7 +125,7 @@ def main():
     with Pool() as pool:
       pool.map(sync_files, files_to_sync)
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     main()
 ```
 
