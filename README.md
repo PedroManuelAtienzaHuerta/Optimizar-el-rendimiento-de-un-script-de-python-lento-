@@ -131,8 +131,8 @@ def main():
     for root, _, files in os.walk(source_dir):
         for file in files:
             files_to_sync.append(os.path.relpath(os.path.join(root, file), source_dir))
-    # Usa Pool para paralelizar el proceso de sincronización de archivos
-    with Pool() as pool:
+    # Usa Pool para paralelizar el proceso de sincronización de archivos, también especifica el número de núcleos de la cpu
+    with Pool(processes=os.cpu_count()) as pool:
         pool.map(sync_files, files_to_sync)
 
 if __name__ == '__main__':
