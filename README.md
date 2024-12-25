@@ -76,7 +76,7 @@ Después de comprobar la E/S de disco y el ancho de banda de red, has observado 
 
 El script dailysync.py original contenía el siguiente código:
 ```python
-#!usr/bin/env python3
+#!/usr/bin/env python3
 
 import subprocess
 src = "home/student/data/prod" # ruta de origen de los datos 
@@ -99,6 +99,37 @@ Aplicaremos el **multiprocesamiento** y los métodos de módulo de **subprocess*
 
 También usaremos el método **os.walk()** para generar los nombres de archivo en un árbol de directorios recorriendo el árbol de arriba hacia abajo o de abajo hacia arriba. Esto se utiliza para **recorrer el sistema de archivos** en Python.
 
+
+El código completo de **dailysync ya optimizado en el editor nano** sería el siguiente:
+```python
+#!/usr/bin/env python3
+import os
+import subprocess
+from multiprocessing import Pool
+
+def sync_files(source_file):
+    source_path = os.path.join('/home/student/data/prod', source_file)
+    dest_path = os.path.join('/home/student/data/prod_backup', source_file)
+    try:
+        subprocess.run(['rsync', '-av', source_path, dest_path], check=True)
+        print(f'Sincronizado: {source_file}')
+    except Subprocess. CalledProcessError as e:
+        print(f'Error al sincronizar {source_file}: {e}')
+
+def main():
+    source_dir = '/home/student/data/prod'
+    files_to_sync = []
+    for root, _, files in os.walk(source_dir):
+        for file in files:
+            files_to_sync.append(os.path.relpath(os.path.join(root, file), source_dir))
+    with Pool() as pool:
+      pool.map(sync_files, files_to_sync)
+
+if __name__ = '__main__':
+    main()
+```
+
+
 Una vez que hayas terminado de escribir el script Python, **guarda el archivo** pulsando Ctrl-o, la tecla Enter y Ctrl-x.
 
 Ahora, conceda el **permiso ejecutable** al script Python dailysync.py para ejecutar este archivo.
@@ -109,7 +140,7 @@ sudo chmod  +x ~/scripts/dailysync.py
 ```
 ./scripts/dailysync.py
 ```
-El resultado sería la sincronización de una gran cantidad de información en muy poco tiempo, por lo que**solucionamos eficazmente el problema** que teníamos con el script lento.
+El resultado sería la sincronización de una gran cantidad de información en muy poco tiempo, por lo que **solucionamos eficazmente el problema** que teníamos con el script lento.
 
 
 
