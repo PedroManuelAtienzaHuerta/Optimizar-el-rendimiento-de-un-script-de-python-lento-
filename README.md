@@ -114,7 +114,8 @@ def sync_files(source_file):
     try:
         # Comando rsync para sincronizar los archivos
         result = subprocess.run(['rsync', '-av', source_path, dest_path], check=True, capture_output=True, text=True)
-        print(f'Sincronizado: {source_file}')print(result.stdout)
+        print(f'Sincronizado: {source_file}')
+        print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f'Error al sincronizar {source_file}: {e}')
         print(f'Comando fallido: {e.cmd}')
