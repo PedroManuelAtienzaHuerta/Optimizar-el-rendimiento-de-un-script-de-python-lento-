@@ -65,18 +65,19 @@ Para comprobar el ancho de banda de E/S de red:
 psutil.net_io_counters()
 ```
 Salida:
-```
+```python
 snetio(bytes_sent=153564, bytes_recv=32133915, packets_sent=2182, 
 packets_recv=2738, errin=0, errout=0, dropin=0, dropout=0)
 ```
 
-Salga del shell de Python usando exit().
+Salga del shell de Python usando **exit()**.
 
-Después de comprobar la E/S de disco y el ancho de banda de red, has observado la cantidad de bytes leídos y escritos para la E/S de disco y bytes recibidos y enviados para el ancho de banda de E/S de red.
+Después de comprobar la E/S de disco y el ancho de banda de red, has observado la **cantidad de bytes leídos y escritos** para la E/S de disco y bytes recibidos y enviados para el ancho de banda de E/S de red.
 
 El script dailysync.py original contenía el siguiente código:
 ```python
-#! usr/bin/env python3 
+#!usr/bin/env python3
+
 import subprocess
 src = "home/student/data/prod" # ruta de origen de los datos 
 dest = "home/student/data/prod_backup" # ruta de destino de los datos 
@@ -86,6 +87,33 @@ subprocess.call(["rsync", "-arq", src, dest]) #Llamamos al método call del mód
 Usando el script anterior, puedes sincronizar tus datos recursivamente desde la ruta de origen a la ruta de destino.
 
 Al ejecutar este script con grandes cantidades de datos tarda más de 20 minutos en realizar la sincronización.
+
+# Editar el archivo lento 
+
+Abre en el editor **nano** el script Python **dailysync.py** que hay que modificar.
+Utilizaremos núcleos de CPU ociosos para la copia de seguridad.
+```
+nano ~/scripts/dailysync.py
+```
+Aplicaremos el **multiprocesamiento** y los métodos de módulo de **subprocess** para sincronizar los datos de **/data/prod** a la carpeta **/data/prod_backup**.
+
+También usaremos el método **os.walk()** para generar los nombres de archivo en un árbol de directorios recorriendo el árbol de arriba hacia abajo o de abajo hacia arriba. Esto se utiliza para **recorrer el sistema de archivos** en Python.
+
+Una vez que hayas terminado de escribir el script Python, **guarda el archivo** pulsando Ctrl-o, la tecla Enter y Ctrl-x.
+
+Ahora, conceda el **permiso ejecutable** al script Python dailysync.py para ejecutar este archivo.
+```
+sudo chmod  +x ~/scripts/dailysync.py
+```
+**Ejecuta el script** Python dailysync.py:
+```
+./scripts/dailysync.py
+```
+El resultado sería la sincronización de una gran cantidad de información en muy poco tiempo, por lo que**solucionamos eficazmente el problema** que teníamos con el script lento.
+
+
+
+
 
 
 
