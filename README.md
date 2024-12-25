@@ -103,6 +103,7 @@ También usaremos el método **os.walk()** para generar los nombres de archivo e
 El código completo de **dailysync ya optimizado en el editor nano** sería el siguiente:
 ```python
 #!/usr/bin/env python3
+
 import os
 import subprocess
 from multiprocessing import Pool
@@ -112,10 +113,13 @@ def sync_files(source_file):
     dest_path = os.path.join('/home/student/data/prod_backup', source_file)
     try:
         # Comando rsync para sincronizar los archivos
-        subprocess.run(['rsync', '-av', source_path, dest_path], check=True)
-        print(f'Sincronizado: {source_file}')
+        result = subprocess.run(['rsync', '-av', source_path, dest_path], check=True, capture_output=True, text=True)
+        print(f'Sincronizado: {source_file}')print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f'Error al sincronizar {source_file}: {e}')
+        print(f'Comando fallido: {e.cmd}')
+        print(f'Código de salida: {e.returncode}')
+        print(f'Salida de error: {e.stderr}')
     except Exception as e:
         print(f'Error inesperado al sincronizar {source_file}: {e}')
 
